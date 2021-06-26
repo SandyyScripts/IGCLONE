@@ -1,5 +1,5 @@
 import firebase from "firebase";
-// require("dotenv").config();
+
 
 const firebaseApp = firebase.initializeApp({
 	apiKey: "AIzaSyA7DoJzMjIOexsqoWqID5KO0UfWqsXvFn4",
@@ -15,4 +15,4 @@ const db = firebaseApp.firestore();
 const auth = firebase.auth();
 const storage = firebase.storage();
 
-export { db, auth,storage };
+export { db, auth, storage };
