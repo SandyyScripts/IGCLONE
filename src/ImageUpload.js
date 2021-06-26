@@ -61,7 +61,9 @@ function ImageUpload({ username }) {
 				onChange={(e) => setCaption(e.target.value)}
 			/>
 			<input type="file" onChange={handleChange} />
-			<Button onClick={handleUpload}>Upload</Button>
+			<Button onClick={handleUpload} disabled={!caption}>
+				Upload
+			</Button>
 		</div>
 	);
 }
