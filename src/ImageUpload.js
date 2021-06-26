@@ -13,7 +13,7 @@ function ImageUpload({ username }) {
 			setImage(e.target.files[0]);
 		}
 	}
-	console.log(username);
+
 	function handleUpload(e) {
 		const uploadTask = storage.ref(`images/${image.name}`).put(image);
 

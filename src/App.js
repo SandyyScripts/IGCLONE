@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import Post from "./Post";
-import { db, auth } from "./firebase";
-import { Modal, Button, Input } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import ImageUpload from "./ImageUpload";
+import React, { useState, useEffect } from "react"
+import "./App.css"
+import Post from "./Post"
+import { db, auth } from "./firebase"
+import { Modal, Button, Input } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
+import ImageUpload from "./ImageUpload"
 // import InstagramEmbed from "react-instagram-embed";
 
 function getModalStyle() {
-	const top = 50;
-	const left = 50;
+	const top = 50
+	const left = 50
 
 	return {
 		top: `${top}%`,
 		left: `${left}%`,
 		transform: `translate(-${top}%, -${left}%)`,
-	};
+	}
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -27,67 +27,67 @@ const useStyles = makeStyles((theme) => ({
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
 	},
-}));
+}))
 
 function App() {
-	const classes = useStyles();
-	const [modalStyle] = useState(getModalStyle);
-	const [posts, setPosts] = useState([]);
-	const [open, setOpen] = useState(false);
-	const [openSignin, setOpenSignin] = useState(false);
-	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [user, setUser] = useState(null);
+	const classes = useStyles()
+	const [modalStyle] = useState(getModalStyle)
+	const [posts, setPosts] = useState([])
+	const [open, setOpen] = useState(false)
+	const [openSignin, setOpenSignin] = useState(false)
+	const [username, setUsername] = useState("")
+	const [email, setEmail] = useState("")
+	const [password, setPassword] = useState("")
+	const [user, setUser] = useState(null)
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((authUser) => {
 			if (authUser) {
 				//User is logged in
-				console.log(authUser);
-				setUser(authUser);
+				console.log(authUser)
+				setUser(authUser)
 			} else {
 				// user logged out
-				setUser(null);
+				setUser(null)
 			}
-		});
+		})
 		return () => {
 			// perform some cleanup actions...
-			unsubscribe();
-		};
-	}, [user, username]);
+			unsubscribe()
+		}
+	}, [user, username])
 
 	useEffect(() => {
+		const items = []
 		db.collection("posts")
 			.orderBy("timestamp", "desc")
 			.onSnapshot((snapshot) => {
-				const temp = [];
 				snapshot.forEach((doc) => {
-					temp.push({ id: doc.id, post: doc.data() });
-				});
-				console.log(temp);
-					setPosts(temp);
-			});
-	}, []);
+					items.push({ id: doc.id, post: doc.data() })
+					// console.log(doc.data())
+				})
+				setPosts(items)
+			})
+	}, [])
 	function signUp(e) {
-		e.preventDefault();
+		e.preventDefault()
 		auth
 			.createUserWithEmailAndPassword(email, password)
 			.then((authuser) => {
 				return authuser.user.updateProfile({
 					displayName: username,
-				});
+				})
 			})
-			.catch((error) => alert(error.message));
-		setOpen(false);
+			.catch((error) => alert(error.message))
+		setOpen(false)
 	}
 	function signIn(e) {
-		e.preventDefault();
+		e.preventDefault()
 		auth
 			.signInWithEmailAndPassword(email, password)
-			.catch((error) => alert(error.message));
-		setOpenSignin(false);
+			.catch((error) => alert(error.message))
+		setOpenSignin(false)
 	}
-	console.log(user);
+
 	return (
 		<div className="App">
 			<Modal open={open} onClose={() => setOpen(false)}>
@@ -170,16 +170,20 @@ function App() {
 
 			<div className="app__posts">
 				<div className="app__postleft">
-					{posts.map(({ id, post }) => (
-						<Post
-							key={id}
-							user={user}
-							postId={id}
-							username={post.username}
-							caption={post.caption}
-							imageURL={post.imageURL}
-						/>
-					))}
+					{
+						posts.map(({ id, post }) => {
+							return (
+								<Post
+									key={id}
+									user={user}
+									postId={id}
+									username={post.username !== null ? post.username : "Null"}
+									caption={post.caption}
+									imageURL={post.imageURL}
+								/>
+							)
+						}
+						)}
 				</div>
 				{/* <div className="app__postright">
 					<InstagramEmbed
@@ -203,8 +207,8 @@ function App() {
 				<h3>Sorry you need to login to upload</h3>
 			)}
 		</div>
-	);
+	)
 }
 
-export default App;
+export default App
 //npm i react-instagram-embed
