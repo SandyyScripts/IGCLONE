@@ -66,6 +66,9 @@ function App() {
 					// console.log(doc.data())
 				});
 				setPosts(items);
+				// setPosts(
+				// 	snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
+				// );
 			});
 	}, []);
 	function signUp(e) {
@@ -118,7 +121,7 @@ function App() {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 						/>
-						<Button type="submit"  onClick={signUp}>
+						<Button type="submit" onClick={signUp}>
 							Sign Up
 						</Button>
 					</form>
@@ -202,7 +205,9 @@ function App() {
 			</div>
 
 			{user ? (
-				<ImageUpload username={user.displayName} />
+				<ImageUpload
+					username={user.displayName ? user.displayName : username}
+				/>
 			) : (
 				<h3>Sorry you need to login to upload</h3>
 			)}
