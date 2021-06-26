@@ -45,3 +45,29 @@
 	border-top: 1px solid lightgray;
 	color: #6082a3;
 }
+.FixedHeightContainer {
+	height: 60px;
+	width: 450px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+/*SCROLLBAR MODIFICATIONS*/
+
+.FixedHeightContainer::-webkit-scrollbar {
+	width: 4px;
+}
+
+.FixedHeightContainer::-webkit-scrollbar-thumb {
+	background: lightgray;
+	border-radius: 4px;
+}
+.FixedHeightContainer::-webkit-scrollbar-track {
+	background: #ffffff;
+}
+.invisible-scrollbar {
+	display: block;
+	width: 10em;
+	overflow: auto;
+	height: 2em;
+}

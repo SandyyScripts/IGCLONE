@@ -49,9 +49,9 @@ function Post({ postId, user, username, caption, imageURL }) {
 				<strong>{username}</strong> {caption}
 			</h4>
 
-			<div className="post__comments">
+			<div className="post__comments FixedHeightContainer">
 				{comments.map((comment) => (
-					<p>
+					<p> 
 						<strong>{comment.username}</strong> {comment.text}
 					</p>
 				))}
