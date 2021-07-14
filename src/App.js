@@ -209,7 +209,7 @@ function App() {
 					username={user.displayName ? user.displayName : username}
 				/>
 			) : (
-				<h3>Sorry you need to login to upload</h3>
+				<h3>Sorry you need to SignIn or SignUp to upload</h3>
 			)}
 		</div>
 	);
